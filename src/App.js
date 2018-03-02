@@ -18,6 +18,13 @@ class App extends React.Component {
     blogService.getAll().then(blogs =>
       this.setState({ blogs })
     )
+
+    const loggedUserJSON = window.localStorage.getItem('loggedAppUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      this.setState({user})
+      loginService.setToken(user.token)
+    }
   }
 
   login = async (event) => {
@@ -27,7 +34,10 @@ class App extends React.Component {
         username: this.state.username,
         password: this.state.password
       })
-  
+      
+      window.localStorage.setItem('loggedAppUser', JSON.stringify(user))
+
+      loginService.setToken(user.token)
       this.setState({ username: '', password: '', user})
       console.log('login successful! Logged in as:', this.state.user)
     } catch(exception) {
@@ -40,8 +50,18 @@ class App extends React.Component {
     }
   }
 
-  handleLoginFieldChange = (event) => {
+  logout = async (event) => {
+    console.log('logout')
+    window.localStorage.clear()
+    this.setState({ user: null })
+  }
+
+  handleLoginChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
+  }
+
+  newBlog = (event) => {
+    console.log('new event')
   }
 
   render() {
@@ -74,9 +94,21 @@ class App extends React.Component {
       </div>
     )
 
+    const logoutButton = () => (
+      <button onClick={this.logout}>kirjaudu ulos</button>
+    )
+
+    const userInfo = () => (
+      <div>
+        <p>User {this.state.user.name} is logged in!</p>
+        {logoutButton()}
+      </div>
+    )
+
     return (
       <div>
         {this.state.user === null && loginForm()}
+        {this.state.user !== null && userInfo()}
 
         <h2>blogs</h2>
         {this.state.blogs.map(blog => 

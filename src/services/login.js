@@ -1,6 +1,8 @@
 import axios from 'axios'
 const baseUrl = '/api/login'
 
+let token = null
+
 const login = async ({ username, password }) => {
   console.log('Trying to login with:')
   console.log(username)
@@ -11,4 +13,8 @@ const login = async ({ username, password }) => {
   return response.data
 }
 
-export default { login }
+const setToken = (newToken) => {
+  token = `bearer ${newToken}`
+}
+
+export default { login, setToken }
