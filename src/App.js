@@ -1,6 +1,7 @@
 import React from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
+import loginService from './services/login'
 
 class App extends React.Component {
   constructor(props) {
@@ -8,6 +9,7 @@ class App extends React.Component {
     this.state = {
       blogs: [],
       user: null,
+      username: '',
       password: ''
     }
   }
@@ -16,6 +18,30 @@ class App extends React.Component {
     blogService.getAll().then(blogs =>
       this.setState({ blogs })
     )
+  }
+
+  login = async (event) => {
+    event.preventDefault()
+    try{
+      const user = await loginService.login({
+        username: this.state.username,
+        password: this.state.password
+      })
+  
+      this.setState({ username: '', password: '', user})
+      console.log('login successful! Logged in as:', this.state.user)
+    } catch(exception) {
+      this.setState({
+        error: 'käyttäjätunnus tai salasana virheellinen',
+      })
+      setTimeout(() => {
+        this.setState({ error: null })
+      }, 5000)
+    }
+  }
+
+  handleLoginFieldChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value })
   }
 
   render() {
@@ -50,7 +76,7 @@ class App extends React.Component {
 
     return (
       <div>
-        {loginForm()}
+        {this.state.user === null && loginForm()}
 
         <h2>blogs</h2>
         {this.state.blogs.map(blog => 
