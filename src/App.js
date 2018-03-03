@@ -2,6 +2,7 @@ import React from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import NewBlogForm from './components/NewBlogForm'
 
 class App extends React.Component {
   constructor(props) {
@@ -56,7 +57,7 @@ class App extends React.Component {
     this.setState({ user: null })
   }
 
-  handleLoginChange = (event) => {
+  handleFieldChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
 
@@ -77,7 +78,7 @@ class App extends React.Component {
               type="text"
               name="username"
               value={this.state.username}
-              onChange={this.handleLoginFieldChange}
+              onChange={this.handleFieldChange}
             />
           </div>
           <div>
@@ -86,7 +87,7 @@ class App extends React.Component {
               type="password"
               name="password"
               value={this.state.password}
-              onChange={this.handleLoginFieldChange}
+              onChange={this.handleFieldChange}
             />
           </div>
           <button type="submit">kirjaudu</button>
@@ -114,6 +115,8 @@ class App extends React.Component {
         {this.state.blogs.map(blog => 
           <Blog key={blog._id} blog={blog}/>
         )}
+
+        <NewBlogForm/>
       </div>
     );
   }

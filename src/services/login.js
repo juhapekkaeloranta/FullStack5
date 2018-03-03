@@ -17,4 +17,8 @@ const setToken = (newToken) => {
   token = `bearer ${newToken}`
 }
 
-export default { login, setToken }
+const getToken = () => {
+  return token
+}
+
+export default { login, setToken, getToken }
