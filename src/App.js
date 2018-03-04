@@ -62,8 +62,8 @@ class App extends React.Component {
     this.setState({ [event.target.name]: event.target.value })
   }
 
-  newBlog = (event) => {
-    console.log('new event')
+  addNewBlogToState = (newBlog) => {
+    this.setState({ blogs: this.state.blogs.concat(newBlog) })
   }
 
   render() {
@@ -127,7 +127,7 @@ class App extends React.Component {
           <Blog key={blog._id} blog={blog}/>
         )}
 
-        <NewBlogForm/>
+        <NewBlogForm showCreatedBlog={this.addNewBlogToState}/>
       </div>
     );
   }

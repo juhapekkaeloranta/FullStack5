@@ -33,7 +33,7 @@ class Blog extends Component {
     
     //const response = await axios.put(`${baseUrl}/${this.state.id}`, likedBlog)
     
-    const responseData = BlogService.updateBlog(this.state.id, likedBlog)
+    const responseData = await BlogService.updateBlog(this.state.id, likedBlog)
     
     console.log('updated!')
     console.log(responseData) 

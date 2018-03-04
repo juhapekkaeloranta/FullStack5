@@ -1,6 +1,6 @@
 import React from 'react'
-import axios from 'axios'
 import loginService from '../services/login'
+import BlogService from '../services/blogs'
 
 const baseUrl = '/api/blogs'
 
@@ -12,6 +12,8 @@ class NewBlogForm extends React.Component {
       title: 't',
       url: 'u'
     }
+    //turha propsin tallentaminen muuttujaan, mutta toisaalta kertoo mitä "oliomuuttujia" on käytössä
+    this.showCreatedBlog = this.props.showCreatedBlog
   }
 
   handleFieldChange = (event) => {
@@ -27,20 +29,13 @@ class NewBlogForm extends React.Component {
       url: this.state.url
     }
 
-    console.log(newBlog)
-
     const config = {
       headers: { 'Authorization': loginService.getToken() }
     }
 
-    console.log(config.headers)
+    const savedBlog = await BlogService.newBlog(baseUrl, newBlog, config)
     
-    const response = await axios.post(baseUrl, newBlog, config)
-
-    console.log(response)
-
-    console.log('stop')
-    return response
+    this.showCreatedBlog(savedBlog)
   }
 
   render() {

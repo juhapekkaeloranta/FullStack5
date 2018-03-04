@@ -11,4 +11,9 @@ const updateBlog = (id, updatedBlog) => {
   return request.then(response => response.data)
 }
 
-export default { getAll, updateBlog }
+const newBlog = (baseUrl, newBlog, config) => {
+  const request = axios.post(baseUrl, newBlog, config)
+  return request.then(response => response.data)
+}
+
+export default { getAll, updateBlog, newBlog }
