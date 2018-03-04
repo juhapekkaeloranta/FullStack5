@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import BlogService from '../services/blogs'
+import PropTypes from 'prop-types'
 
 class Blog extends Component {
+  static propTypes = {
+    blog: PropTypes.object.isRequired
+  }
+  
   constructor(props) {
     super(props)
     this.state = {
-      id: props.blog._id,
-      author: props.blog.author,
-      title: props.blog.title,
-      url: props.blog.url,
-      likes: props.blog.likes,
-      user: props.blog.user,
+      blog: props.blog,
       visible: false
     }
   }
@@ -21,17 +21,15 @@ class Blog extends Component {
 
   likeBlog = async () => {
     const likedBlog = {
-      _id: this.state.id,
-      author: this.state.author,
-      title: this.state.title,
-      url: this.state.url,
-      likes: this.state.likes + 1,
-      user: this.state.user
+      _id: this.state.blog._id,
+      author: this.state.blog.author,
+      title: this.state.blog.title,
+      url: this.state.blog.url,
+      likes: this.state.blog.likes + 1,
+      user: this.state.blog.user
     }
 
-    this.setState({ likes: this.state.likes + 1 })
-    
-    //const response = await axios.put(`${baseUrl}/${this.state.id}`, likedBlog)
+    this.setState({ likes: this.state.blog.likes + 1 })
     
     const responseData = await BlogService.updateBlog(this.state.id, likedBlog)
     
@@ -49,12 +47,12 @@ class Blog extends Component {
 
     return (
       <div>
-        <a onClick={this.toggleVisibility} style={blogStyle}>{this.state.title}</a> - {this.state.author}
+        <a onClick={this.toggleVisibility} style={blogStyle}>{this.state.blog.title}</a> - {this.state.blog.author}
         <div style={showWhenVisible}>
           <ul>
-            <li>{this.state.url}</li>
-            <li>likes: {this.state.likes} <button onClick={this.likeBlog}>Like</button></li>
-            <li>added by: {this.state.user}</li>
+            <li>{this.state.blog.url}</li>
+            <li>likes: {this.state.blog.likes} <button onClick={this.likeBlog}>Like</button></li>
+            <li>added by: {this.state.blog.user}</li>
           </ul>
 
         </div>

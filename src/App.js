@@ -111,7 +111,7 @@ class App extends React.Component {
 
     return (
       <div>
-        <Togglable buttonLabel="Show login form">
+        <Togglable buttonLabel="login form">
           <LoginForm
             handleSubmit={this.login}
             handleChange={this.handleFieldChange}

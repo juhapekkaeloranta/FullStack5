@@ -1,10 +1,15 @@
 import React from 'react'
 import loginService from '../services/login'
 import BlogService from '../services/blogs'
+import PropTypes from 'prop-types'
 
 const baseUrl = '/api/blogs'
 
 class NewBlogForm extends React.Component {
+  static propTypes = {
+    showCreatedBlog: PropTypes.func.isRequired
+  }
+  
   constructor(props) {
     super(props)
     this.state = {
@@ -12,10 +17,8 @@ class NewBlogForm extends React.Component {
       title: 't',
       url: 'u'
     }
-    //turha propsin tallentaminen muuttujaan, mutta toisaalta kertoo mitä "oliomuuttujia" on käytössä
-    this.showCreatedBlog = this.props.showCreatedBlog
   }
-
+  
   handleFieldChange = (event) => {
     console.log('click')
     this.setState({ [event.target.name]: event.target.value })
@@ -35,7 +38,7 @@ class NewBlogForm extends React.Component {
 
     const savedBlog = await BlogService.newBlog(baseUrl, newBlog, config)
     
-    this.showCreatedBlog(savedBlog)
+    this.props.showCreatedBlog(savedBlog)
   }
 
   render() {
