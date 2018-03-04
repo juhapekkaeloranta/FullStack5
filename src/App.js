@@ -19,10 +19,14 @@ class App extends React.Component {
 
   componentDidMount() {
     blogService.getAll().then(blogs =>
+      console.log('componentDidMount got', blogs.length, 'blogs') &&
       this.setState({ blogs })
     )
 
+    console.log('hello from componentDidMount')
+    console.log('blogs from mock:', this.state.blogs)
     const loggedUserJSON = window.localStorage.getItem('loggedAppUser')
+    console.log('componentDidMount, local storage:', window.localStorage)
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       this.setState({user})
@@ -79,7 +83,8 @@ class App extends React.Component {
   }
 
   render() {
-
+    console.log('Rendering! User:', this.state.user)
+    console.log('Rendering!', this.state.blogs.length)
     const logoutButton = () => (
       <button onClick={this.logout}>kirjaudu ulos</button>
     )
@@ -103,7 +108,7 @@ class App extends React.Component {
       </div>
     )
 
-    return (
+    return (  
       <div>
         <Togglable buttonLabel="login form">
           <LoginForm

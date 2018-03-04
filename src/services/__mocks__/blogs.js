@@ -22,7 +22,7 @@ const blogs = [
 ]
 
 const getAll = () => {
-  console.log('mock get all')
+  console.log('mockBlogs.getAll returning:', blogs.length, 'blogs')
   return Promise.resolve(blogs)
 }
 
