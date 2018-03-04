@@ -39,8 +39,8 @@ class Blog extends Component {
 
     return (
       <div>
-        <a onClick={this.toggleVisibility} style={blogStyle}>{this.state.blog.title}</a> - {this.state.blog.author}
-        <div style={showWhenVisible}>
+        <a className="blogHeader" onClick={this.toggleVisibility} style={blogStyle}>{this.state.blog.title} - {this.state.blog.author}</a>
+        <div className="blogDetails" style={showWhenVisible}>
           <ul>
             <li>{this.state.blog.url}</li>
             <li>likes: {this.state.blog.likes} <button onClick={this.likeBlog}>Like</button></li>
