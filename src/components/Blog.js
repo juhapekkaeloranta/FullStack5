@@ -20,25 +20,17 @@ class Blog extends Component {
   }
 
   likeBlog = async () => {
-    const likedBlog = {
-      _id: this.state.blog._id,
-      author: this.state.blog.author,
-      title: this.state.blog.title,
-      url: this.state.blog.url,
-      likes: this.state.blog.likes + 1,
-      user: this.state.blog.user
-    }
-
-    this.setState({ likes: this.state.blog.likes + 1 })
+    const likedBlog = { ...this.state.blog, likes: this.state.blog.likes + 1 }
     
-    const responseData = await BlogService.updateBlog(this.state.id, likedBlog)
+    const updatedBlog = await BlogService.updateBlog(this.state.blog._id, likedBlog)
     
-    console.log('updated!')
-    console.log(responseData) 
+    //Nyt blogin tila tallessa kahdessa paikassa!
+    //Päivitettävä sekä Blog että App tilat!
+    this.setState({ blog: likedBlog })
+    this.props.showUpdatedBlog(updatedBlog)
   }
 
   render() {
-    //const hideWhenVisible = { display: this.state.visible ? 'none' : '' }
     const showWhenVisible = { display: this.state.visible ? '' : 'none' }
 
     const blogStyle = {

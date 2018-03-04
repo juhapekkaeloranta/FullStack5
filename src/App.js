@@ -66,6 +66,16 @@ class App extends React.Component {
     this.setState({ blogs: this.state.blogs.concat(newBlog) })
   }
 
+  updateBlogInState = (updatedBlog) => {
+    console.log('Updating blog!')
+    
+    const newBlogArray = this.state.blogs.map(blog =>
+      blog._id !== updatedBlog._id ? blog : updatedBlog
+    )
+    
+    this.setState({ blogs: newBlogArray })
+  }
+
   render() {
 
     const LoginForm = ({ handleSubmit, handleChange, username, password }) => {
@@ -124,7 +134,7 @@ class App extends React.Component {
 
         <h2>blogs</h2>
         {this.state.blogs.map(blog => 
-          <Blog key={blog._id} blog={blog}/>
+          <Blog key={blog._id} blog={blog} showUpdatedBlog={this.updateBlogInState}/>
         )}
 
         <NewBlogForm showCreatedBlog={this.addNewBlogToState}/>
