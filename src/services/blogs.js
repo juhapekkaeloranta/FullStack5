@@ -6,4 +6,9 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
-export default { getAll}
+const updateBlog = (id, updatedBlog) => {
+  const request = axios.put(`${baseUrl}/${id}`, updatedBlog)
+  return request.then(response => response.data)
+}
+
+export default { getAll, updateBlog }

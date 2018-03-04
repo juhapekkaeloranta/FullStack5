@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios'
-const baseUrl = '/api/blogs'
+import BlogService from '../services/blogs'
 
 class Blog extends Component {
   constructor(props) {
@@ -32,10 +31,12 @@ class Blog extends Component {
 
     this.setState({ likes: this.state.likes + 1 })
     
-    const response = await axios.put(`${baseUrl}/${this.state.id}`, likedBlog)
-
+    //const response = await axios.put(`${baseUrl}/${this.state.id}`, likedBlog)
+    
+    const responseData = BlogService.updateBlog(this.state.id, likedBlog)
+    
     console.log('updated!')
-    console.log(response) 
+    console.log(responseData) 
   }
 
   render() {
