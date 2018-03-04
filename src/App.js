@@ -1,5 +1,6 @@
 import React from 'react'
 import Blog from './components/Blog'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import NewBlogForm from './components/NewBlogForm'
@@ -67,8 +68,9 @@ class App extends React.Component {
 
   render() {
 
-    const loginForm = () => (
-      <div>
+    const LoginForm = ({ handleSubmit, handleChange, username, password }) => {
+      return (
+        <div>
         <h2>Kirjaudu</h2>
         
         <form onSubmit={this.login}>
@@ -77,8 +79,8 @@ class App extends React.Component {
             <input
               type="text"
               name="username"
-              value={this.state.username}
-              onChange={this.handleFieldChange}
+              value={username}
+              onChange={handleChange}
             />
           </div>
           <div>
@@ -86,14 +88,15 @@ class App extends React.Component {
             <input
               type="password"
               name="password"
-              value={this.state.password}
-              onChange={this.handleFieldChange}
+              value={password}
+              onChange={handleChange}
             />
           </div>
           <button type="submit">kirjaudu</button>
         </form>
       </div>
-    )
+      )
+    }
 
     const logoutButton = () => (
       <button onClick={this.logout}>kirjaudu ulos</button>
@@ -108,7 +111,15 @@ class App extends React.Component {
 
     return (
       <div>
-        {this.state.user === null && loginForm()}
+        <Togglable buttonLabel="Show login form">
+          <LoginForm
+            handleSubmit={this.login}
+            handleChange={this.handleFieldChange}
+            username={this.state.username}
+            password={this.state.password}
+          />
+        </Togglable>
+
         {this.state.user !== null && userInfo()}
 
         <h2>blogs</h2>
