@@ -6,6 +6,7 @@ class Blog extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      id: props.blog._id,
       author: props.blog.author,
       title: props.blog.title,
       url: props.blog.url,
@@ -20,17 +21,21 @@ class Blog extends Component {
   }
 
   likeBlog = async () => {
-    console.log('blog liked!')
-
-    this.setState({ likes: this.state.likes + 1 })
-
     const likedBlog = {
+      _id: this.state.id,
       author: this.state.author,
       title: this.state.title,
       url: this.state.url,
-      likes: this.state.likes,
+      likes: this.state.likes + 1,
       user: this.state.user
     }
+
+    this.setState({ likes: this.state.likes + 1 })
+    
+    const response = await axios.put(`${baseUrl}/${this.state.id}`, likedBlog)
+
+    console.log('updated!')
+    console.log(response) 
   }
 
   render() {
